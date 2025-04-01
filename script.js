@@ -1,3 +1,4 @@
+
 document.getElementById('start-btn').addEventListener('click', function () {
     document.getElementById('welcome-screen').classList.add('hidden');
     document.getElementById('subject-screen').classList.remove('hidden');
@@ -8,40 +9,11 @@ document.getElementById('back-btn').addEventListener('click', function () {
     document.getElementById('subject-screen').classList.remove('hidden');
 });
 
-const scienceQuestions = [
-    { question: "Quelle est la formule chimique de l'eau ?", answers: ["O2", "CO2", "H2O", "NaCl"], correct: "H2O" },
-    { question: "Quel est l'élément chimique le plus abondant dans l'univers ?", answers: ["Hydrogène", "Oxygène", "Carbone", "Hélium"], correct: "Hydrogène" },
-    { question: "Combien de planètes composent le système solaire ?", answers: ["7", "8", "9", "10"], correct: "8" },
-    { question: "Quel organe humain consomme le plus d'oxygène ?", answers: ["Le cœur", "Les poumons", "Le cerveau", "Le foie"], correct: "Le cerveau" },
-    { question: "Quelle est la vitesse de la lumière ?", answers: ["300 000 km/s", "150 000 km/s", "1 000 km/s", "3 000 km/s"], correct: "300 000 km/s" }
-];
-while (scienceQuestions.length < 200) {
-    scienceQuestions.push(...scienceQuestions);
-}
-scienceQuestions.length = 200;
-
 const questions = {
-    "Maths": [...Array(200)].map((_, i) => ({
-        question: `Combien fait ${i + 1} + ${i + 2} ?`,
-        answers: [`${i + 3}`, `${i + 4}`, `${i + 5}`, `${i + 6}`],
-        correct: `${i + 3}`
-    })),
-    "Science": scienceQuestions,
-    "Histoire": [...Array(200)].map(() => ({
-        question: "En quelle année a eu lieu la Révolution française ?",
-        answers: ["1789", "1815", "1492", "1914"],
-        correct: "1789"
-    })),
-    "Capitales": [...Array(200)].map(() => ({
-        question: "Quelle est la capitale de la France ?",
-        answers: ["Paris", "Londres", "Berlin", "Madrid"],
-        correct: "Paris"
-    })),
-    "Citations": [...Array(200)].map(() => ({
-        question: "Qui a dit 'Je pense, donc je suis' ?",
-        answers: ["Descartes", "Platon", "Nietzsche", "Socrate"],
-        correct: "Descartes"
-    }))
+    "Science": [
+        { question: "Quelle est la formule chimique de l'eau ?", answers: ["O2", "CO2", "H2O", "NaCl"], correct: "H2O" },
+        { question: "Quel est l'élément chimique le plus abondant dans l'univers ?", answers: ["Hydrogène", "Oxygène", "Carbone", "Hélium"], correct: "Hydrogène" }
+    ]
 };
 
 document.querySelectorAll('.subject-btn').forEach(btn => {
@@ -54,8 +26,28 @@ document.querySelectorAll('.subject-btn').forEach(btn => {
 
 function startQuiz(subject) {
     let index = 0;
+    let timerInterval;
+    
+    function startTimer(callback) {
+        let timeLeft = 10;
+        const timerDiv = document.getElementById('timer');
+        timerDiv.textContent = timeLeft;
+        timerDiv.classList = "w-12 h-12 flex items-center justify-center text-white font-bold text-xl bg-green-500 rounded-full";
+        
+        if (timerInterval) clearInterval(timerInterval);
+        timerInterval = setInterval(() => {
+            timeLeft--;
+            timerDiv.textContent = timeLeft;
+            if (timeLeft === 5) timerDiv.classList.replace("bg-green-500", "bg-red-500");
+            if (timeLeft === 0) {
+                clearInterval(timerInterval);
+                callback();
+            }
+        }, 1000);
+    }
+    
     function showNextQuestion() {
-        if (index >= 10) {
+        if (index >= questions[subject].length) {
             alert('Quiz terminé!');
             location.reload();
             return;
@@ -66,6 +58,7 @@ function startQuiz(subject) {
         answersDiv.innerHTML = '';
         const feedbackDiv = document.getElementById('feedback');
         feedbackDiv.textContent = '';
+        
         q.answers.forEach(ans => {
             const btn = document.createElement('button');
             btn.textContent = ans;
@@ -78,6 +71,7 @@ function startQuiz(subject) {
             });
             answersDiv.appendChild(btn);
         });
+        
         startTimer(() => {
             index++;
             showNextQuestion();

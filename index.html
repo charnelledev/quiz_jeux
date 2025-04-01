@@ -8,14 +8,23 @@
 
     <title>Quiz Interactif</title>
 </head>
-
-<body class="min-h-screen flex items-center justify-center p-8">
-    <div id="welcome-screen" class="w-full max-w-md bg-white p-6 rounded-lg shadow-lg text-center">
-        <h1 class="text-2xl font-bold text-gray-700">Bienvenue sur le jeu de Quiz</h1>
+<body class="min-h-screen flex items-center justify-center p-8"></body>
+    <div id="welcome-screen" class="w-full max-w-lg bg-white p-8 rounded-lg shadow-lg text-center">
+        <h1 class="text-3xl font-bold text-gray-700">Bienvenue sur le jeu de Quiz</h1>
+        <p class="mt-2 text-gray-600">Vous n'allez pas vous ennuyer avec nous</p>
         <button id="start-btn" class="mt-6 bg-blue-500 text-white px-4 py-2 rounded">Commencer</button>
     </div>
     
-    <div id="subject-screen" class="w-full max-w-md bg-white p-6 rounded-lg shadow-lg text-center hidden">
+    <div id="level-screen" class="w-full max-w-lg bg-white p-8 rounded-lg shadow-lg text-center hidden">
+        <h1 class="text-xl font-bold text-gray-700">Choisissez un niveau</h1>
+        <div id="levels" class="mt-4 grid grid-cols-3 gap-4">
+            <button class="level-btn bg-red-500 text-white p-2 rounded" data-time="10">Difficile (10s)</button>
+            <button class="level-btn bg-yellow-500 text-white p-2 rounded" data-time="15">Normal (15s)</button>
+            <button class="level-btn bg-green-500 text-white p-2 rounded" data-time="20">Facile (20s)</button>
+        </div>
+    </div>
+    
+    <div id="subject-screen" class="w-full max-w-lg bg-white p-8 rounded-lg shadow-lg text-center hidden">
         <h1 class="text-xl font-bold text-gray-700">Choisissez une matière</h1>
         <div id="subjects" class="mt-4 grid grid-cols-2 gap-4">
             <button class="subject-btn bg-blue-500 text-white p-2 rounded">Maths</button>
@@ -26,11 +35,11 @@
         </div>
     </div>
     
-    <div id="quiz" class="hidden w-full max-w-md bg-white p-6 rounded-lg shadow-lg text-center">
+    <div id="quiz" class="hidden w-full max-w-lg bg-white p-8 rounded-lg shadow-lg text-center">
         <button id="back-btn" class="bg-gray-500 text-white px-3 py-1 rounded mb-4">Retour</button>
         <div class="flex justify-between items-center">
             <div class="text-gray-700 text-lg font-semibold" id="question-text"></div>
-            <div id="timer" class="w-12 h-12 flex items-center justify-center text-white font-bold text-xl bg-green-500 rounded-full">10</div>
+            <div id="timer" class="w-16 h-16 flex items-center justify-center text-white font-bold text-xl bg-green-500 rounded-full">10</div>
         </div>
         <div id="answers" class="mt-4 grid grid-cols-2 gap-4"></div>
         <div id="feedback" class="mt-4 text-lg font-semibold p-2 rounded"></div>
